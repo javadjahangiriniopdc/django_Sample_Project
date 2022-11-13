@@ -1,11 +1,12 @@
 from django.db import models
-
+from jalali_date import date2jalali, datetime2jalali
 
 # Create your models here.
 class Customer(models.Model):
     username = models.CharField(max_length=20, verbose_name='نام کاربری')
     first_name = models.CharField(max_length=25, verbose_name='نام')
     last_name = models.CharField(max_length=50, verbose_name='نام خانوادگی')
+    birthday = models.DateTimeField(null=True, blank=False, verbose_name='تاریخ تولد')
     mobile = models.CharField(max_length=20, verbose_name='موبایل')
     email = models.EmailField(verbose_name='ایمیل')
 
@@ -15,6 +16,9 @@ class Customer(models.Model):
     class Meta:
         verbose_name = 'مشتری'
         verbose_name_plural = 'مشتریان'
+
+    def get_jalai_date_birthday(self):
+        return date2jalali(self.birthday)
 
 
 class Product(models.Model):
