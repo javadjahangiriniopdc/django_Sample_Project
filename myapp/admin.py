@@ -4,9 +4,7 @@ from django.contrib import admin
 from myapp.form import CustomerForm
 from myapp.models import *
 
-
 admin.site.register(Product)
-admin.site.register(OrderApp)
 
 
 class CustomerAdmin(admin.ModelAdmin):
@@ -15,3 +13,12 @@ class CustomerAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Customer, CustomerAdmin)
+
+
+class OrderAppAdmin(admin.ModelAdmin):
+    list_display = ('customer', 'product', 'price', 'num', 'price_all', 'create_at', 'update_at')
+    raw_id_fields = ['product']
+
+
+admin.site.register(OrderApp, OrderAppAdmin)
+
