@@ -4,9 +4,11 @@ from django.contrib import admin
 from myapp.form import CustomerForm
 from myapp.models import *
 
+admin.site.register(City)
+
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('username', 'first_name', 'last_name', 'get_jalali_date_birthday', 'mobile', 'email')
+    list_display = ('username', 'first_name', 'last_name', 'get_jalali_date_birthday', 'mobile', 'email', 'get_city')
     form = CustomerForm
 
 
@@ -17,7 +19,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'image_tag')
 
 
-admin.site.register(Product,ProductAdmin)
+admin.site.register(Product, ProductAdmin)
 
 
 class OrderAppAdmin(admin.ModelAdmin):

@@ -3,6 +3,14 @@ from django.db import models
 # Create your models here.
 from django.utils.safestring import mark_safe
 from jalali_date import date2jalali
+from django.utils.html import format_html
+
+
+class City(models.Model):
+    name = models.CharField(max_length=50, verbose_name='نام شهر')
+
+    def __str__(self):
+        return self.name
 
 
 class Customer(models.Model):
@@ -12,6 +20,7 @@ class Customer(models.Model):
     birthday = models.DateTimeField(null=True, verbose_name='تاریخ تولد')
     mobile = models.CharField(max_length=20, verbose_name='موبایل')
     email = models.EmailField(verbose_name='ایمیل')
+    city = models.ManyToManyField(City, verbose_name='شهر')
 
     def __str__(self):
         return self.first_name + '-' + self.last_name
@@ -24,6 +33,14 @@ class Customer(models.Model):
         return date2jalali(self.birthday)
 
     get_jalali_date_birthday.short_description = 'تاریخ تولد'
+
+    def get_city(self):
+        cites = Customer.objects.get(id=self.id).city.all()
+        out = ''
+        for city in cites:
+            if city.name:
+                out += f'<li>{city.name}</li> '
+        return format_html(out)
 
 
 class Product(models.Model):

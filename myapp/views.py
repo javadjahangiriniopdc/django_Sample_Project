@@ -27,5 +27,9 @@ def home(request):
 
     # orderapps = OrderApp.objects.filter(customer__first_name='جواد')
     # orderapps = OrderApp.objects.select_related('customer').filter(customer__first_name='جواد')
+
+    # orderapps = OrderApp.objects.filter(customer__city__name='ارومیه')
+
+
     context = {'orderapps': orderapps}
     return render(request, 'myapp/index.html', context)
