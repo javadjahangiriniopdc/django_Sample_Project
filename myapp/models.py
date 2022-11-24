@@ -1,11 +1,15 @@
 from django.db import models
 
-
 # Create your models here.
+from django.utils.safestring import mark_safe
+from jalali_date import date2jalali
+
+
 class Customer(models.Model):
     username = models.CharField(max_length=20, verbose_name='نام کاربری')
     first_name = models.CharField(max_length=25, verbose_name='نام')
     last_name = models.CharField(max_length=50, verbose_name='نام خانوادگی')
+    birthday = models.DateTimeField(null=True, verbose_name='تاریخ تولد')
     mobile = models.CharField(max_length=20, verbose_name='موبایل')
     email = models.EmailField(verbose_name='ایمیل')
 
@@ -16,11 +20,19 @@ class Customer(models.Model):
         verbose_name = 'مشتری'
         verbose_name_plural = 'مشتریان'
 
+    def get_jalali_date_birthday(self):
+        return date2jalali(self.birthday)
+
+    get_jalali_date_birthday.short_description = 'تاریخ تولد'
+
 
 class Product(models.Model):
     name = models.CharField(max_length=50, verbose_name='نام')
     price = models.IntegerField(verbose_name='قیمت')
     img = models.ImageField(upload_to='product_img', null=True, blank=True, verbose_name='عکس')
+
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="50"  />' % self.img.url)
 
     class Meta:
         verbose_name = 'محصول'
@@ -45,3 +57,12 @@ class OrderApp(models.Model):
     class Meta:
         verbose_name = 'سفارش'
         verbose_name_plural = 'سفارشات'
+
+    def get_jalali_date_creat_at(self):
+        return date2jalali(self.create_at)
+
+    def get_jalali_date_update_at(self):
+        return date2jalali(self.update_at)
+
+    def get_time_create_at(self):
+        return self.create_at.strftime('%H:%M:%S')

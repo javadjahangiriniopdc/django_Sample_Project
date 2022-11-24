@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap 5 Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'myapp/css/bootstrap.min.css' %}" rel="stylesheet">
+
+</head>
+<body>
+
+{% include 'myapp/header.html' %}
+{% include 'myapp/nav.html' %}
+
+{% block content %}
+
+{% endblock %}
+
+{% include 'myapp/footer.html' %}
+
+<script src="{% static 'myapp/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>

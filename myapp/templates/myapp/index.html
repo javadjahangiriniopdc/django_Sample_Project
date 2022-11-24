@@ -1,0 +1,47 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>نام مشتری</th>
+                        <th>نام خانوادگی مشتری</th>
+                        <th>نام محصول</th>
+                        <th>قیمت</th>
+                        <th>تعداد</th>
+                        <th>قیمت کل</th>
+                        <th>تاریخ ایجاد</th>
+                        <th>ساعت ایجاد</th>
+                        <th>تاریخ ویرایش</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for orderapp in orderapps %}
+                        <tr>
+                            <td>{{ orderapp.customer.first_name }}</td>
+                            <td>{{ orderapp.customer.last_name }}</td>
+                            <td>{{ orderapp.product.name }}</td>
+                            <td>{{ orderapp.price }}</td>
+                            <td>{{ orderapp.num }}</td>
+                            <td>{{ orderapp.price_all }}</td>
+                            <td>{{ orderapp.get_jalali_date_creat_at }}</td>
+                            <td>{{ orderapp.get_time_create_at }}</td>
+                            <td>{{ orderapp.get_jalali_date_update_at }}</td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
